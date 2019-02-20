@@ -90,7 +90,7 @@ table 里空值就显示空白, 不需要显示占位符 `-`
 ```vue
     <data-table
       ref="dataTable"
-      :data="list"
+      :data="mockData"
       :columns="columns"
       :config="config"
       noPagination

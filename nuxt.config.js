@@ -1,4 +1,5 @@
 require('dotenv').config()
+const extendRoutes = require('./src/const/path')
 
 const env = process.env
 const isProd = env.MODE == 'prod'
@@ -16,7 +17,10 @@ const config = {
     },
     dev: {
       // '/security': 'http://your.dev.server'
-      '/security': 'http://your.dev.server'
+      '/security': {
+        target: 'http://yapi.demo.qunar.com/mock/9638',
+        changeOrigin: true
+      }
     }
   }
 }
@@ -41,7 +45,8 @@ module.exports = {
   proxy: config.env[env.MODE],
   router: {
     middleware: ['meta'],
-    mode: 'hash'
+    mode: 'hash',
+    extendRoutes
   },
   /*
    ** Build configuration
@@ -125,5 +130,9 @@ module.exports = {
     }
   ],
   modules: [['@nuxtjs/axios'], ['@nuxtjs/dotenv', {path: './'}]],
+  server: {
+    port: 3000
+  },
+  serverMiddleware: [{path: '/api', handler: '~/middleware/server.js'}],
   axios
 }
